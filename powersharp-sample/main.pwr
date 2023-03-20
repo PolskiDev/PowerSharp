@@ -16,9 +16,6 @@ include "vector"
 
 
 def main()
-    @error err
-    x = 3
-    
     @ (TODO CODE HERE)
     5 times do
         puts("Hello world")
