@@ -1,0 +1,24 @@
+namespace org.gabrielmargarido.powerscript
+package main
+
+@ (imports here)
+import "strings"
+import "io/ioutil"
+import "os"
+import "fmt"
+
+@ (includes here)
+include "string_handling"
+include "file"
+include "os"
+include "vector"
+
+
+
+def main()
+    @ (TODO CODE HERE)
+    5 times do
+        puts("Hello world")
+    end
+end
+

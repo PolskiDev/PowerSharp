@@ -1,0 +1,25 @@
+{
+    "name": "powersharp",
+    "displayName": "PowerSharp P#",
+    "description": "PowerSharp Programming Language",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.60.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "powersharp",
+            "aliases": ["PowerSharp", "powersharp"],
+            "extensions": [".pwr"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "powersharp",
+            "scopeName": "source.pwr",
+            "path": "./syntaxes/powersharp.tmLanguage.json"
+        }]
+    }
+}
