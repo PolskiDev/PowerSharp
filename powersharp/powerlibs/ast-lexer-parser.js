@@ -25,6 +25,9 @@ let func_collection = [ // Put all custom functions here, first!
 
 let import_collection = []
 let linecounter = 0     // Used for error handling!
+let err_handling = false
+let err_handling_name
+
 
 function GenerateAST(input) {
     let regex = /[A-Za-z0-9_$++::.,@*#?><>=<=>{}===:=\[\]]+|"[^"]+"|'[^']+'|\([^)]*\)|\[[^\]]*\]|\/[^)/]*\/|(:)|(=)/g
@@ -101,22 +104,29 @@ function GenerateAST(input) {
                 
 
             // Declaração de variaveis e vetores
+            else if (stack[i] == token_table.tokens.error_decorator) {
+                let name = stack[i+1]
+                err_handling = true
+                err_handling_name = name
+            }
             else if (stack[i] == token_table.tokens.variable_assignment) {
                 let vartype = stack[i-2]
                 let varname = stack[i-1]
                 //let value = stack[i+1]
                 let value = line.slice(line.indexOf('=')+2)
                 value = value.replace(/nil/g, null)
-                
+
                 if (var_collection.includes(varname)) {
                     console.log("Semantic-Error: variable or array ("+varname+") was already declared - error on line:"+linecounter)
                     break
                 } else {
+                    /** Array Tree */
                     if (varname.includes(token_table.tokens.array_symbol.slice(0,1))
                     && varname.includes(
                         token_table.tokens.array_symbol.slice
                         (-1,token_table.tokens.array_symbol.length)
                     )) {
+                        /** Array Definition */
                         let data = {
                             token: token_table.tokens.variable_assignment,
                             type: 'array_assignment',
@@ -133,6 +143,8 @@ function GenerateAST(input) {
                             }
                         }
                         json.push(data);
+                        
+
                     } else {
                         // Searching for errors
                         if (vartype == token_table.tokens.typedef_integer && isNaN(value) == true) {
@@ -146,23 +158,33 @@ function GenerateAST(input) {
                             break
                         // If everything is Ok, then generate AST.
                         } else {
+                            /** Variable Tree */
+
                             /*value = value.replace(/MokaScript\.toInteger/g, 'parseInt')
                             value = value.replace(/MokaScript\.toFloat/g, 'parseFloat')*/
                             if (vartype == undefined) { vartype = ''}
 
-
+                            if (err_handling == true) {
+                                varname = varname+', '+err_handling_name
+                            }
+                            
+                            /** Variable Declaration */
                             let data = {
                                 token: token_table.tokens.variable_assignment,
                                 type: 'variable_assignment',
                                 data: {
                                     vartype: vartype,
                                     varname: varname,
-                                    value: value
+                                    value: value,
+                                    error_name: err_handling_name
                                 }
                             }
                             json.push(data);
                             var_collection.push(varname)
                             typedef_colection.push(vartype)
+
+                            err_handling = false
+                            err_handling_name = ''
                         }
                         
                     }

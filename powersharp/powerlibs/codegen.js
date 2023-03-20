@@ -28,11 +28,15 @@ function CodeGen(input, output, mode='normal') {
 
 
         else if (codegen[i].type == 'variable_assignment') {
-            if (codegen[i].data.vartype == undefined) {
+            if (codegen[i].data.vartype == '') {
                 if (codegen[i].data.value == null) {
                     fs.appendFileSync(output,'/* '+codegen[i].data.varname+' := '+codegen[i].data.value+' */\n')
                 } else {
                     fs.appendFileSync(output,codegen[i].data.varname+' := '+codegen[i].data.value+'\n')
+                    //if (codegen[i].data.error_name != undefined) {
+                        fs.appendFileSync(output, `if ${codegen[i].data.error_name} != nil { log.Fatal(${codegen[i].data.error_name}) }\n`)
+                    //}
+
                 }
             } else {
                 if (codegen[i].data.value == null) {

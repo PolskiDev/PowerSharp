@@ -3,7 +3,7 @@ let tokens = {
     package_definition: "package",
     open_block: "do",
     end_block: "end",
-    commentary: "@",
+    commentary: "#",
     variable_assignment: "=",
     variable_reassignment: ":=",
     array_symbol: "[]",
@@ -21,6 +21,7 @@ let tokens = {
     times: "times",
     break_loop: "break",
     continue_loop: "continue",
+    error_decorator: "@error",
 
     typedef_integer: "int",
     typedef_float: "float",
