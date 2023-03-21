@@ -560,6 +560,38 @@ function GenerateAST(input) {
                 }
                 json.push(data);
             }
+            else if (stack[i] == token_table.tokens.struct_create) {
+                let name = stack[i+1]
+                if (stack[i+2] == undefined) {
+                    console.log("Syntax-Error: Expected ("+token_table.token.open_block+") after ("+name+") - error on line:"+linecounter)
+                    break
+                } else if (var_collection.includes(name)) {
+                    console.log("Semantic-Error: Variable/Structure ("+name+") was already declared! - error on line:"+linecounter)
+                    break
+                } else {
+                    let data = {
+                        token: token_table.tokens.struct_create,
+                        name: name,
+                        type: 'struct_create'
+                    }
+                    json.push(data);
+                    var_collection.push(name)
+                }
+
+            }
+            else if (stack[i] == token_table.tokens.struct_declare) {
+                let name = stack[i+1]
+                let type = stack[i+2]
+                let data = {
+                    token: token_table.tokens.struct_declare,
+                    data : {
+                        name: name,
+                        type: type,
+                    },
+                    type: 'struct_declare'
+                }
+                json.push(data);
+            }
 
 
 

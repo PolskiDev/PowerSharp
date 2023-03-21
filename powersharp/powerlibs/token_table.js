@@ -12,6 +12,8 @@ let tokens = {
     package_including: "include",
     function_definition: "def",
     return_value: "return",
+    struct_create: "struct",
+    struct_declare: "declare",
     conditional_if: "if",
     conditional_elsif: "elsif",
     conditional_final: "else",

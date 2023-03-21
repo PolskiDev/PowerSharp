@@ -18,7 +18,7 @@
         }],
         "grammars": [{
             "language": "powersharp",
-            "scopeName": "source.pwr",
+            "scopeName": "source.powersharp",
             "path": "./syntaxes/powersharp.tmLanguage.json"
         }]
     }

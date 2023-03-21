@@ -112,6 +112,19 @@ function CodeGen(input, output, mode='normal') {
             fs.appendFileSync(output, 'continue'+'\n')
         }
 
+        else if (codegen[i].type == 'break_loop') {
+            fs.appendFileSync(output, 'break'+'\n')
+        }
+        else if (codegen[i].type == 'struct_create') {
+            let name = codegen[i].name
+            fs.appendFileSync(output, 'type '+name+' struct ')
+        }
+        else if (codegen[i].type == 'struct_declare') {
+            let name = codegen[i].data.name
+            let type = codegen[i].data.type
+            fs.appendFileSync(output, name+' '+type+'\n')
+        }
+
         //console.log("DEBUGGING: "+dump(codegen[i]))
     }
     if (mode == 'debugging') {
